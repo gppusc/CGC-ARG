@@ -1,0 +1,37 @@
+# 模型配置
+model:
+  name: "../ESM2_t30_150M_UR50D"  # Hugging Face 模型名称
+  max_seq_length: 1024            # 输入序列最大长度
+  filter_size: 64                # CNN 过滤器数量
+  use_mechanism: true  # 添加控制是否使用机制任务的参数
+  use_remove: true     # 添加控制是否使用转移任务的参数
+
+
+# 训练配置
+training:
+  batch_size: 4                 # 批次大小
+  learning_rate: 1e-5           # 初始学习率
+  epochs: 50                    # 最大训练轮次
+  patience: 3                    # 早停耐心值（连续多少轮无改进则停止）
+  validate_multitask: true       # 是否在验证阶段评估多任务指标
+  max_grad_norm: 0.1  # 新增梯度裁剪参数
+  fp16: true  # 启用混合精度训练
+  resume: false
+
+# 数据路径配置
+data:
+  train_path: "data/train.csv"    # 训练集路径
+  val_path: "data/val.csv"        # 验证集路径
+  test_path: "data/test.csv"      # 测试集路径
+
+# 日志和输出配置
+output:
+  model_dir: "outputs/best_model" # 最佳模型保存路径
+  log_dir: "outputs/logs"         # 训练日志路径
+
+regularization:  # 新增正则化配置节
+  hidden_dropout: 0.3
+  attn_dropout: 0.2
+  classifier_dropout: 0.4
+
+
